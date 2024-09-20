@@ -1,0 +1,85 @@
+const startBtn = document.getElementById('startBtn');
+const formSection = document.getElementById('formSection');
+const searchSection = document.getElementById('searchSection');
+const updateInfoSection = document.getElementById('updateInfoSection');
+const submitBtn = document.getElementById('submitBtn');
+const searchBtn = document.getElementById('searchBtn');
+const updateInfoBtn = document.getElementById('updateInfoBtn');
+
+const provinceSelect = document.getElementById('provinceSelect');
+const genderSelect = document.getElementById('genderSelect');
+const nameInput = document.getElementById('nameInput');
+const usernameInput = document.getElementById('usernameInput');
+const ageInput = document.getElementById('ageInput');
+const regionInput = document.getElementById('regionInput');
+const beautyInput = document.getElementById('beautyInput');
+
+startBtn.addEventListener('click', () => {
+    startBtn.classList.add('hidden');
+    formSection.classList.remove('hidden');
+});
+
+submitBtn.addEventListener('click', () => {
+    const userInfo = {
+        province: provinceSelect.value,
+        gender: genderSelect.value,
+        name: nameInput.value,
+        username: usernameInput.value,
+        age: parseInt(ageInput.value),
+        region: regionInput.value,
+        beauty: parseInt(beautyInput.value)
+    };
+
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    formSection.classList.add('hidden');
+    searchSection.classList.remove('hidden');
+    updateInfoSection.classList.remove('hidden');
+});
+
+searchBtn.addEventListener('click', () => {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    if (!userInfo) {
+        alert('الرجاء تسجيل معلوماتك أولاً!');
+        return;
+    }
+
+    const userAge = userInfo.age;
+    const oppositeGender = userInfo.gender === 'ذكر' ? 'أنثى' : 'ذكر';
+    const matchedUsers = getMatchedUsers(userInfo.province, userAge, oppositeGender);
+
+    if (matchedUsers.length > 0) {
+        const matchedUser = matchedUsers[Math.floor(Math.random() * matchedUsers.length)];
+        alert(`تم العثور على شخص: \nالاسم: ${matchedUser.name} \nاليوزر: ${matchedUser.username} \nالعمر: ${matchedUser.age}`);
+    } else {
+        alert('لم يتم العثور على شخص مناسب');
+    }
+});
+
+updateInfoBtn.addEventListener('click', () => {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    if (userInfo) {
+        provinceSelect.value = userInfo.province;
+        genderSelect.value = userInfo.gender;
+        nameInput.value = userInfo.name;
+        usernameInput.value = userInfo.username;
+        ageInput.value = userInfo.age;
+        regionInput.value = userInfo.region;
+        beautyInput.value = userInfo.beauty;
+
+        formSection.classList.remove('hidden');
+        searchSection.classList.add('hidden');
+        updateInfoSection.classList.add('hidden');
+    }
+});
+
+function getMatchedUsers(province, userAge, gender) {
+    // محاكاة بيانات مستخدمين (في التطبيق الحقيقي، هذه البيانات سيتم جلبها من قاعدة بيانات)
+    const users = [
+        { province: "بغداد", gender: "أنثى", name: "فاطمة", username: "@fatima123", age: userAge - 1 },
+        { province: "بغداد", gender: "ذكر", name: "علي", username: "@ali123", age: userAge },
+        { province: "البصرة", gender: "أنثى", name: "زينب", username: "@zainab456", age: userAge + 1 }
+        // إضافة المزيد من المستخدمين عند الحاجة
+    ];
+
+    return users.filter(user => user.province === province && user.age <= userAge && user.gender === gender);
+}
