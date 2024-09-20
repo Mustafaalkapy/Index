@@ -1,61 +1,77 @@
 <!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Untitled</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .login-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            margin: 0 auto;
-        }
-        input[type="text"], input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-        }
-    </style>
+    <title>بوت التعارف</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="login-container">
-        <h2>تسجيل الدخول</h2>
-        <input type="text" id="codeInput" placeholder="أدخل الكود">
-        <input type="submit" value="تسجيل الدخول" onclick="validateCode()">
-        <p id="errorMessage" style="color: red;"></p>
+
+    <h1>أهلاً وسهلاً ضيف معلوماتك حته تحصلك مريه معدله </h1>
+    <button id="startBtn" class="primary-btn">تسجيل المعلومات</button>
+
+    <div id="formSection" class="hidden">
+        <h2>قم باختيار محافظتك</h2>
+        <select id="provinceSelect" class="styled-select">
+            <option value="بغداد">بغداد</option>
+            <option value="البصرة">البصرة</option>
+            <option value="نينوى">نينوى</option>
+            <option value="الأنبار">الأنبار</option>
+            <option value="كركوك">كركوك</option>
+            <option value="صلاح الدين">صلاح الدين</option>
+            <option value="ديالى">ديالى</option>
+            <option value="النجف">النجف</option>
+            <option value="كربلاء">كربلاء</option>
+            <option value="بابل">بابل</option>
+            <option value="واسط">واسط</option>
+            <option value="ميسان">ميسان</option>
+            <option value="ذي قار">ذي قار</option>
+            <option value="المثنى">المثنى</option>
+            <option value="القادسية">القادسية</option>
+            <option value="السليمانية">السليمانية</option>
+            <option value="أربيل">أربيل</option>
+            <option value="دهوك">دهوك</option>
+        </select>
+
+        <h2>اختر جنسك</h2>
+        <select id="genderSelect" class="styled-select">
+            <option value="ذكر">ذكر</option>
+            <option value="أنثى">أنثى</option>
+        </select>
+
+        <input type="text" id="nameInput" placeholder="أدخل اسمك" class="styled-input">
+        <input type="text" id="usernameInput" placeholder="أدخل اليوزر الخاص بك" class="styled-input">
+        <input type="number" id="ageInput" placeholder="أدخل عمرك" class="styled-input">
+        <input type="text" id="regionInput" placeholder="من أي منطقة" class="styled-input">
+        <input type="number" id="beautyInput" placeholder="نسبة جمالك (0-100)" class="styled-input">
+        <button id="submitBtn" class="primary-btn">حفظ المعلومات</button>
     </div>
 
-    <script>
-        let validCodes = ["123456"];  // قائمة الأكواد الصالحة
-        let expirationTimes = [new Date().getTime() + (5 * 60 * 1000)]; // مدة صلاحية الأكواد
+    <div id="searchSection" class="hidden">
+        <button id="searchBtn" class="primary-btn">البحث عن شخص من محافظتك</button>
+    </div>
 
-        function validateCode() {
-            let enteredCode = document.getElementById('codeInput').value;
-            let currentTime = new Date().getTime();
-            let codeIndex = validCodes.indexOf(enteredCode);
+    <div id="updateInfoSection" class="hidden">
+        <button id="updateInfoBtn" class="secondary-btn">تعديل المعلومات الخاصة بك</button>
+    </div>
 
-            if (codeIndex !== -1 && currentTime < expirationTimes[codeIndex]) {
-                window.location.href = "search.html";  // الانتقال إلى صفحة البحث بعد نجاح تسجيل الدخول
-            } else if (codeIndex !== -1 && currentTime >= expirationTimes[codeIndex]) {
-                document.getElementById('errorMessage').textContent = "انتهت صلاحية الكود!";
-            } else {
-                document.getElementById('errorMessage').textContent = "الكود غير صحيح!";
-            }
-        }
-    </script>
+    <script src="script.js"></script>
+
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
 </body>
 </html>
